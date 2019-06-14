@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:10-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  web:
+    build: .
+    command: python /mango/manage.py runserver 0.0.0.0:8001
+    volumes:
+      - .:/mango
+    ports:
+      - 8001:8001
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
